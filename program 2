@@ -1,0 +1,69 @@
+#include <iostream>
+using namespace std;
+
+class Time {
+private:
+    int hr, min, sec;
+
+public:
+
+    Time() : hr(0), min(0), sec(0) {}
+
+    void getdata() {
+        cout << "Enter hours: ";
+        cin >> hr;
+        cout << "Enter minutes: ";
+        cin >> min;
+        cout << "Enter seconds: ";
+        cin >> sec;
+        normalize();
+    }
+
+    void showdata() const {
+        cout << hr << " : " << min << " : " << sec << endl;
+    }
+
+    void normalize() {
+        min += sec / 60;
+        sec %= 60;
+        hr += min / 60;
+        min %= 60;
+        hr %= 24;  // Optional, if you want to keep time in 24-hour format
+    }
+
+    Time operator+(const Time& t) {
+        Time temp;
+        temp.sec = sec + t.sec;
+        temp.min = min + t.min;
+        temp.hr = hr + t.hr;
+        temp.normalize();
+        return temp;
+    }
+    Time operator++(int) {
+        Time temp = *this;
+        sec++;
+        normalize();
+        return temp;
+    }
+};
+
+int main() {
+    Time t1, t2, t3;
+
+    cout << "Enter time for t1\n";
+    t1.getdata();
+
+    cout << "Enter time for t2\n";
+    t2.getdata();
+
+    t3 = t1 + t2;     
+    t1++;             
+
+    cout << "t3 = t1 + t2 = ";
+    t3.showdata();
+
+    cout << "After t1++: t1 = ";
+    t1.showdata();
+
+    return 0;
+}
