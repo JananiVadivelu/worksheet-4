@@ -1,0 +1,70 @@
+#include <iostream>
+using namespace std;
+
+class Complex {
+private:
+    double real;
+    double imag;
+
+public:
+    Complex() {
+        real = 0.0;
+        imag = 0.0;
+        cout << "Default constructor called\n";
+    }
+
+    Complex(double r, double i) {
+        real = r;
+        imag = i;
+        cout << "Parameterized constructor called\n";
+    }
+
+    Complex(const Complex &c) {
+        real = c.real;
+        imag = c.imag;
+        cout << "Copy constructor called\n";
+    }
+
+    ~Complex() {
+        cout << "Destructor called for " << real << " + " << imag << "i\n";
+    }
+
+    void getdata() {
+        cout << "Enter real part: ";
+        cin >> real;
+        cout << "Enter imaginary part: ";
+        cin >> imag;
+    }
+
+    void showdata() const {
+        cout << real << " + " << imag << "i" << endl;
+    }
+
+    // Static function to add two complex numbers
+    static Complex add_complex(const Complex &c1, const Complex &c2) {
+        Complex temp;
+        temp.real = c1.real + c2.real;
+        temp.imag = c1.imag + c2.imag;
+        return temp;
+    }
+};
+
+int main() {
+    Complex c1;       // Default constructor
+    c1.getdata();
+
+    Complex c2(3, 4); // Parameterized constructor
+
+    Complex c3 = Complex::add_complex(c1, c2); // Add complex numbers using static function
+
+    cout << "First complex number: ";
+    c1.showdata();
+
+    cout << "Second complex number: ";
+    c2.showdata();
+
+    cout << "Sum of complex numbers: ";
+    c3.showdata();
+
+    return 0;
+}
